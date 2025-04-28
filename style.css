@@ -1,0 +1,415 @@
+/* Basic Reset & Font */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Inter', sans-serif;
+    line-height: 1.6;
+    transition: background-color 0.3s ease, color 0.3s ease;
+}
+
+/* Light/Dark Theme Variables */
+:root {
+    --bg-color-light: #f8f9fa;
+    --text-color-light: #212529;
+    --border-color-light: #dee2e6;
+    --header-bg-light: #e9ecef;
+    --textarea-bg-light: #fff;
+    --button-bg-light: #007bff;
+    --button-text-light: #fff;
+    --button-hover-bg-light: #0056b3;
+    --code-bg-light: #f1f3f5;
+
+    --bg-color-dark: #212529;
+    --text-color-dark: #f8f9fa;
+    --border-color-dark: #495057;
+    --header-bg-dark: #343a40;
+    --textarea-bg-dark: #343a40;
+    --button-bg-dark: #6c757d;
+    --button-text-dark: #fff;
+    --button-hover-bg-dark: #5a6268;
+    --code-bg-dark: #343a40; /* Match Prism theme */
+}
+
+body[data-theme='light'] {
+    background-color: var(--bg-color-light);
+    color: var(--text-color-light);
+}
+
+body[data-theme='dark'] {
+    background-color: var(--bg-color-dark);
+    color: var(--text-color-dark);
+}
+
+/* Header */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem 2rem;
+    transition: background-color 0.3s ease;
+}
+body[data-theme='light'] header {
+    background-color: var(--header-bg-light);
+    border-bottom: 1px solid var(--border-color-light);
+}
+body[data-theme='dark'] header {
+    background-color: var(--header-bg-dark);
+    border-bottom: 1px solid var(--border-color-dark);
+}
+
+header h1 {
+    font-size: 1.5rem;
+}
+
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+}
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+body[data-theme='light'] #theme-toggle { color: var(--text-color-light); }
+body[data-theme='dark'] #theme-toggle { color: var(--text-color-dark); }
+
+
+/* Main Container - Flexbox for side-by-side layout (2 columns) */
+.container {
+    display: flex;
+    padding: 1rem;
+    gap: 1rem;
+    min-height: calc(100vh - 150px); /* Adjust based on header/footer height */    
+}
+
+.input-section,
+.output-section {
+    flex: 1; /* Each takes half the space */
+    display: flex;
+    flex-direction: column; /* Keep column direction within sections */
+    min-width: 0; /* Prevent flex items from overflowing */
+}
+
+h2 {
+    margin-bottom: 0.5rem;
+    font-size: 1.2rem;
+    text-align: center;
+}
+
+/* Toolbar */
+.toolbar {
+    display: flex;
+    gap: 0.5rem;
+    margin-bottom: 0.5rem;
+    justify-content: flex-start; /* Align items to the start */
+    align-items: center; /* Center items horizontally */
+    border-bottom: 1px solid;
+    margin-bottom: 0; /* Remove margin below tabs */
+    padding: 0 0.5rem; /* Add some padding */
+}
+body[data-theme='light'] .output-tabs { border-bottom-color: var(--border-color-light); }
+body[data-theme='dark'] .output-tabs { border-bottom-color: var(--border-color-dark); }
+
+
+.tab-button {
+    padding: 0.6rem 1rem;
+    border: none;
+    border-bottom: 3px solid transparent; /* For active indicator */
+    background: none;
+    cursor: pointer;
+    font-size: 1rem;
+    margin-bottom: -1px; /* Overlap border */
+    transition: border-color 0.2s ease, color 0.2s ease;
+}
+body[data-theme='light'] .tab-button { color: var(--text-color-light); }
+body[data-theme='dark'] .tab-button { color: var(--text-color-dark); }
+
+.tab-button.active {
+    border-bottom-color: var(--button-bg-light); /* Use button color for active tab */
+    font-weight: bold;
+}
+body[data-theme='dark'] .tab-button.active {
+    border-bottom-color: var(--button-bg-dark);
+}
+
+.tab-button:hover:not(.active) {
+    color: #888; /* Subtle hover effect */
+}
+
+.output-toolbar {
+    margin-left: auto; /* Push toolbar to the right */
+    margin-bottom: 0; /* Remove margin */
+    padding: 0.3rem 0; /* Adjust padding */
+}
+
+/* General Buttons (keep previous styles) */
+button {
+    padding: 0.5rem 1rem;
+    border: none;
+    border-radius: 4px;
+    cursor: pointer;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.9rem;
+    transition: background-color 0.2s ease;
+}
+
+body[data-theme='light'] .toolbar button {
+    background-color: var(--button-bg-light);
+    color: var(--button-text-light);
+}
+body[data-theme='dark'] .toolbar button {
+    background-color: var(--button-bg-dark);
+    color: var(--button-text-dark);
+}
+
+body[data-theme='light'] .toolbar button:hover {
+    background-color: var(--button-hover-bg-light);
+}
+body[data-theme='dark'] .toolbar button:hover {
+    background-color: var(--button-hover-bg-dark);
+}
+
+
+/* Textarea */
+#markdown-input {
+    width: 100%;
+    height: 100%; /* Fill available space */
+    min-height: 300px; /* Minimum height */
+    padding: 0.75rem;
+    border: 1px solid;
+    border-radius: 4px;
+    font-family: monospace; /* Good for code */
+    font-size: 0.95rem;
+    resize: none; /* Disable manual resize, we'll use JS */
+    overflow-y: auto; /* Add scroll if needed */
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
+
+body[data-theme='light'] #markdown-input {
+    background-color: var(--textarea-bg-light);
+    color: var(--text-color-light);
+    border-color: var(--border-color-light);
+}
+body[data-theme='dark'] #markdown-input {
+    background-color: var(--textarea-bg-dark);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+/* HTML Output Area (Pre/Code) */
+.output-section pre {
+    flex-grow: 1; /* Allow pre to grow and fill space */
+    overflow: auto; /* Add scrollbars if content overflows */
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 0 !important; /* Override Prism's default padding */
+    margin: 0 !important; /* Override Prism's default margin */
+    min-height: 300px; 
+    transition: border-color 0.3s ease;
+
+}
+
+body[data-theme='light'] .output-section pre {
+    border-color: var(--border-color-light);
+    /* Prism theme handles background/text */
+}
+body[data-theme='dark'] .output-section pre {
+    border-color: var(--border-color-dark);
+     /* Prism theme handles background/text */
+}
+
+/* Live Preview Area */
+#html-preview {
+    flex-grow: 1; 
+    overflow: auto; 
+    border: 1px solid;
+    border-radius: 4px;
+    padding: 1.5rem;
+    min-height: 300px; /* Match textarea */
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    word-wrap: break-word;
+}
+
+body[data-theme='light'] #html-preview {
+    background-color: var(--textarea-bg-light); /* Use similar background as input */
+    color: var(--text-color-light);
+    border-color: var(--border-color-light);
+}
+body[data-theme='dark'] #html-preview {
+    background-color: var(--textarea-bg-dark);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+/* Output Panes */
+.output-pane {
+    flex-grow: 1; /* Allow pane to fill space */
+    overflow: auto; /* Add scrollbars */
+    border: 1px solid;
+    border-top: none; /* Remove top border as tabs have bottom border */
+    border-radius: 0 0 4px 4px; /* Round bottom corners */
+    padding: 0.75rem;
+    min-height: 300px; /* Match textarea */
+    transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
+    word-wrap: break-word;
+}
+.output-pane:not(.active) {
+    display: none; /* Hide inactive panes */
+}
+
+body[data-theme='light'] .output-pane {
+    background-color: var(--textarea-bg-light);
+    color: var(--text-color-light);
+    border-color: var(--border-color-light);
+}
+body[data-theme='dark'] .output-pane {
+    background-color: var(--textarea-bg-dark);
+    color: var(--text-color-dark);
+    border-color: var(--border-color-dark);
+}
+
+/* Specific styling for source code pane container */
+#html-output-container {
+    padding: 0; /* Remove padding as pre/code has its own */
+}
+#html-output-container pre {
+    border: none; /* Remove border from pre inside the pane */
+    border-radius: 0;
+    min-height: 100%;
+    height: 100%;
+    margin: 0 !important;
+    background-color: transparent !important; /* Inherit from pane */
+}
+
+/* Ensure code block fills the pre tag (Source Code View) */
+#html-output {
+    display: block; /* Make it block level */
+    padding: 0.75rem; /* Add padding inside code */
+    min-height: 100%; /* Try to fill parent */
+    white-space: pre-wrap; /* Wrap long lines */
+    word-wrap: break-word; /* Break words if needed */
+}
+
+/* Footer */
+footer {
+    text-align: center;
+    padding: 1rem;
+    margin-top: 1rem;
+    font-size: 0.9rem;
+    border-top: 1px solid;
+    transition: border-color 0.3s ease;
+}
+body[data-theme='light'] footer { border-top-color: var(--border-color-light); }
+body[data-theme='dark'] footer { border-top-color: var(--border-color-dark); }
+
+
+/* Responsive Design - Stack columns on smaller screens */
+@media (max-width: 768px) {
+    .container {
+        flex-direction: column;
+    }
+
+    header {
+        padding: 1rem;
+    }
+
+    header h1 {
+        font-size: 1.3rem;
+    }
+
+    #markdown-input,
+    .output-pane { /* Target panes now */
+        min-height: 250px; /* Adjust height for mobile */
+    }
+
+    .output-tabs {
+        flex-wrap: wrap; /* Allow tabs/toolbar to wrap */
+    }
+    .output-toolbar {
+        margin-left: 0; /* Reset margin for wrapping */
+        width: 100%;
+        justify-content: flex-end;
+        padding-top: 0.5rem;
+    }
+}
+
+/* Prism.js Light Theme Overrides */
+body[data-theme='light'] #html-output-container code[class*="language-"],
+body[data-theme='light'] #html-output-container pre[class*="language-"] {
+    color: #333; /* Darker base text */
+    background: none; /* Use pane background */
+    text-shadow: none;
+}
+
+body[data-theme='light'] #html-output-container .token.comment,
+body[data-theme='light'] #html-output-container .token.prolog,
+body[data-theme='light'] #html-output-container .token.doctype,
+body[data-theme='light'] #html-output-container .token.cdata {
+    color: #999; /* Lighter gray for comments */
+}
+
+body[data-theme='light'] #html-output-container .token.punctuation {
+    color: #777; /* Slightly darker gray for punctuation */
+}
+
+body[data-theme='light'] #html-output-container .token.property,
+body[data-theme='light'] #html-output-container .token.tag,
+body[data-theme='light'] #html-output-container .token.boolean,
+body[data-theme='light'] #html-output-container .token.number,
+body[data-theme='light'] #html-output-container .token.constant,
+body[data-theme='light'] #html-output-container .token.symbol,
+body[data-theme='light'] #html-output-container .token.deleted {
+    color: #c92c2c; /* Reddish for tags, numbers, etc. */
+}
+
+body[data-theme='light'] #html-output-container .token.selector,
+body[data-theme='light'] #html-output-container .token.attr-name,
+body[data-theme='light'] #html-output-container .token.string,
+body[data-theme='light'] #html-output-container .token.char,
+body[data-theme='light'] #html-output-container .token.builtin,
+body[data-theme='light'] #html-output-container .token.inserted {
+    color: #2f9c0a; /* Green for strings, attributes */
+}
+
+body[data-theme='light'] #html-output-container .token.operator,
+body[data-theme='light'] #html-output-container .token.entity,
+body[data-theme='light'] #html-output-container .token.url,
+body[data-theme='light'] #html-output-container .language-css .token.string,
+body[data-theme='light'] #html-output-container .style .token.string {
+    color: #a67f59; /* Brownish for operators, URLs */
+    background: none;
+}
+
+body[data-theme='light'] #html-output-container .token.atrule,
+body[data-theme='light'] #html-output-container .token.attr-value,
+body[data-theme='light'] #html-output-container .token.keyword {
+    color: #0077cc; /* Blue for keywords, attribute values */
+}
+
+body[data-theme='light'] #html-output-container .token.function,
+body[data-theme='light'] #html-output-container .token.class-name {
+    color: #d94a7a; /* Pink/Purple for functions */
+}
+
+body[data-theme='light'] #html-output-container .token.regex,
+body[data-theme='light'] #html-output-container .token.important,
+body[data-theme='light'] #html-output-container .token.variable {
+    color: #e90; /* Orange for regex, variables */
+}
+
+body[data-theme='light'] #html-output-container .token.important,
+body[data-theme='light'] #html-output-container .token.bold {
+    font-weight: bold;
+}
+body[data-theme='light'] #html-output-container .token.italic {
+    font-style: italic;
+}
+
+body[data-theme='light'] #html-output-container .token.entity {
+    cursor: help;
+}

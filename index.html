@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- SEO Improvement: Added descriptive title with keywords -->
+    <title>Online Markdown to HTML Converter | Real-time Preview & Syntax Highlighting</title>
+    <!-- SEO Improvement: Added meta description -->
+    <meta name="description" content="Convert Markdown to clean HTML instantly with our free online tool. Features real-time preview, syntax highlighting, dark mode, and easy copy/download options.">
+    <!-- SEO Improvement: Added Canonical URL -->
+    <link rel="canonical" href="https://okeken.github.io/markdown-to-html/" /> <!-- Replace with your actual URL -->
+    <!-- SEO Improvement: Added Open Graph meta tags -->
+    <meta property="og:title" content="Online Markdown to HTML Converter | Real-time Preview">
+    <meta property="og:description" content="Convert Markdown to clean HTML instantly with our free online tool. Features real-time preview, syntax highlighting, dark mode, and easy copy/download options.">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="https://okeken.github.io/markdown-to-html/"> <!-- Replace with your actual URL -->
+    <!-- SEO Improvement: Added Twitter Card meta tags -->
+    <meta name="twitter:card" content="summary">
+    <meta name="twitter:title" content="Online Markdown to HTML Converter | Real-time Preview">
+    <meta name="twitter:description" content="Convert Markdown to clean HTML instantly with our free online tool. Features real-time preview, syntax highlighting, dark mode, and easy copy/download options.">
+
+    <link rel="stylesheet" href="style.css">
+    <!-- Prism.js CSS (Choose a theme, e.g., Okaidia) -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/themes/prism-okaidia.min.css" integrity="sha512-mIs9kKbaw6JZFfSuo+MovjU+Ntggfoj8RwAmJbVXQ5mkAX5LlgETQEweFPI18humSPHymTb5iikEOKWF7I8ncQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <!-- Add a nice font (e.g., Inter) -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+</head>
+<body data-theme="light"> 
+
+    <!-- SEO Note: Existing lang="en" and viewport meta are good -->
+</head>
+<body data-theme="light"> <!-- Default theme -->
+
+    <header>
+        <!-- SEO Note: H1 is the primary keyword focus, only one H1 exists - Good -->
+        <h1>Online Markdown to HTML Converter</h1>
+        <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
+    </header>
+    <!-- SEO Note: Using <main> for primary content - Good -->
+
+    <main class="container">
+    <main class="container">
+        <!-- SEO Note: Using <section> for logical content blocks - Good -->
+        <section class="input-section">
+            <h2>Markdown Input</h2>
+            <div class="toolbar">
+                <button id="paste-md" aria-label="Paste Markdown from clipboard">Paste</button>
+                <button id="clear-all" aria-label="Clear input and output">Clear</button>
+            </div>
+            <textarea id="markdown-input" placeholder="Type your Markdown here..." aria-label="Markdown Input Area"></textarea>
+        </section>
+
+        <section class="output-section">
+            <div class="output-tabs">
+                <button id="tab-preview" class="tab-button active" aria-controls="html-preview" aria-selected="true">Preview</button>
+                <button id="tab-source" class="tab-button" aria-controls="html-output-container" aria-selected="false">Source</button>
+                <div class="toolbar output-toolbar"> <!-- Moved toolbar here -->
+                    <button id="copy-html" aria-label="Copy HTML source code to clipboard">Copy Source</button>
+                    <button id="download-html" aria-label="Download HTML source code file">Download Source</button>
+                </div>
+            </div>
+            <div id="html-preview" class="output-pane active" role="tabpanel" aria-labelledby="tab-preview">
+                <!-- Rendered HTML will appear here -->
+            </div>
+            <div id="html-output-container" class="output-pane" role="tabpanel" aria-labelledby="tab-source" hidden> <!-- Container for pre/code -->
+                 <pre><code id="html-output" class="language-html"></code></pre>
+            </div>
+        </section>
+    </main>
+
+    <!-- marked.js -->
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <!-- Prism.js Core + HTML component -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/components/prism-core.min.js" integrity="sha512-9khQRAUBYEJDCDVP2yw3LRUQvjJ0Pjx0EShmaQjcHa6AXiOv6qHQu9lCAIR8O+/D8FtaCoJ2c0Tf9Xo7hYH01Q==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/prism/1.29.0/plugins/autoloader/prism-autoloader.min.js" integrity="sha512-zc7WDnCM3aom2EziyDIRAtQg1mVXLdILE09Bo+aEyt+rdhX/itChPWefHr ridiculusRbokG/z5/PISod46NhtQQtyQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    <!-- App script -->
+    <script src="script.js"></script>
+</body>
+</html>
