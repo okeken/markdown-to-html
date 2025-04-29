@@ -11,27 +11,31 @@ body {
     transition: background-color 0.3s ease, color 0.3s ease;
 }
 
-/* Light/Dark Theme Variables */
+/* Modern Light/Dark Theme Variables */
 :root {
-    --bg-color-light: #f8f9fa;
-    --text-color-light: #212529;
-    --border-color-light: #dee2e6;
-    --header-bg-light: #e9ecef;
-    --textarea-bg-light: #fff;
-    --button-bg-light: #007bff;
-    --button-text-light: #fff;
-    --button-hover-bg-light: #0056b3;
-    --code-bg-light: #f1f3f5;
+    /* Light Theme */
+    --bg-color-light: #ffffff;
+    --text-color-light: #1a1a1a;
+    --border-color-light: #e0e0e0;
+    --header-bg-light: #f5f5f5;
+    --textarea-bg-light: #ffffff;
+    --button-bg-light: #4a90e2; /* Softer blue */
+    --button-text-light: #ffffff;
+    --button-hover-bg-light: #357abd; /* Darker blue */
+    --tab-active-border-light: var(--button-bg-light);
+    --code-bg-light: #f9f9f9;
 
-    --bg-color-dark: #212529;
-    --text-color-dark: #f8f9fa;
-    --border-color-dark: #495057;
-    --header-bg-dark: #343a40;
-    --textarea-bg-dark: #343a40;
-    --button-bg-dark: #6c757d;
-    --button-text-dark: #fff;
-    --button-hover-bg-dark: #5a6268;
-    --code-bg-dark: #343a40; /* Match Prism theme */
+    /* Dark Theme */
+    --bg-color-dark: #121212;
+    --text-color-dark: #e0e0e0;
+    --border-color-dark: #333333;
+    --header-bg-dark: #1e1e1e;
+    --textarea-bg-dark: #1e1e1e;
+    --button-bg-dark: #5a9ee2; /* Lighter blue for dark */
+    --button-text-dark: #121212; /* Dark text on light blue */
+    --button-hover-bg-dark: #7bb4e8; /* Lighter hover */
+    --tab-active-border-dark: var(--button-bg-dark);
+    --code-bg-dark: #1e1e1e; /* Match textarea */
 }
 
 body[data-theme='light'] {
@@ -130,11 +134,15 @@ body[data-theme='light'] .tab-button { color: var(--text-color-light); }
 body[data-theme='dark'] .tab-button { color: var(--text-color-dark); }
 
 .tab-button.active {
-    border-bottom-color: var(--button-bg-light); /* Use button color for active tab */
     font-weight: bold;
 }
+body[data-theme='light'] .tab-button.active {
+    border-bottom-color: var(--tab-active-border-light);
+    color: var(--button-bg-light); /* Match border color */
+}
 body[data-theme='dark'] .tab-button.active {
-    border-bottom-color: var(--button-bg-dark);
+    border-bottom-color: var(--tab-active-border-dark);
+    color: var(--button-bg-dark); /* Match border color */
 }
 
 .tab-button:hover:not(.active) {
@@ -147,32 +155,72 @@ body[data-theme='dark'] .tab-button.active {
     padding: 0.3rem 0; /* Adjust padding */
 }
 
-/* General Buttons (keep previous styles) */
+/* General Buttons */
 button {
-    padding: 0.5rem 1rem;
     border: none;
-    border-radius: 4px;
+    border-radius: 5px; /* Slightly more rounded */
     cursor: pointer;
     font-family: 'Inter', sans-serif;
-    font-size: 0.9rem;
-    transition: background-color 0.2s ease;
+    transition: background-color 0.2s ease, transform 0.1s ease, box-shadow 0.2s ease;
+    padding: 0.6rem 0.8rem; /* Adjust padding for icons */
+    font-size: 1rem; /* Increase icon size slightly */
+    line-height: 1; /* Ensure icon is centered vertically */
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+}
+
+button:active {
+    transform: scale(0.98); /* Click effect */
+    box-shadow: none; /* Remove shadow on click */
+}
+
+/* Toolbar Buttons */
+.toolbar button {
+    background-color: transparent; /* Make toolbar buttons less prominent initially */
+    box-shadow: none;
+    display: inline-flex; /* Align icon and text */
+    align-items: center; /* Vertically center icon and text */
+    gap: 0.4em; /* Add space between icon and text */
+    font-size: 0.9rem; /* Slightly smaller font for button text */
+    padding: 0.5rem 0.8rem; /* Adjust padding */
+}
+
+.toolbar button i {
+    font-size: 1rem; /* Keep icon size */
+    line-height: 1; /* Ensure icon aligns well */
 }
 
 body[data-theme='light'] .toolbar button {
-    background-color: var(--button-bg-light);
-    color: var(--button-text-light);
+    color: var(--button-bg-light); /* Use primary color for icon */
 }
 body[data-theme='dark'] .toolbar button {
-    background-color: var(--button-bg-dark);
-    color: var(--button-text-dark);
+    color: var(--button-bg-dark); /* Use primary color for icon */
 }
 
 body[data-theme='light'] .toolbar button:hover {
-    background-color: var(--button-hover-bg-light);
+    background-color: rgba(74, 144, 226, 0.1); /* Light blue subtle hover */
 }
 body[data-theme='dark'] .toolbar button:hover {
-    background-color: var(--button-hover-bg-dark);
+    background-color: rgba(90, 158, 226, 0.15); /* Light blue subtle hover */
 }
+
+/* Specific Button Styling (e.g., Theme Toggle) */
+#theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.5rem; /* Keep size */
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    box-shadow: none; /* Remove general button shadow */
+    padding: 0.2rem; /* Adjust padding */
+}
+#theme-toggle:hover {
+    transform: scale(1.1);
+}
+#theme-toggle:active {
+    transform: scale(1); /* Override general button active scale */
+}
+body[data-theme='light'] #theme-toggle { color: var(--text-color-light); }
+body[data-theme='dark'] #theme-toggle { color: var(--text-color-dark); }
 
 
 /* Textarea */
@@ -182,7 +230,7 @@ body[data-theme='dark'] .toolbar button:hover {
     min-height: 300px; /* Minimum height */
     padding: 0.75rem;
     border: 1px solid;
-    border-radius: 4px;
+    border-radius: 5px; /* Match buttons */
     font-family: monospace; /* Good for code */
     font-size: 0.95rem;
     resize: none; /* Disable manual resize, we'll use JS */
@@ -206,10 +254,10 @@ body[data-theme='dark'] #markdown-input {
     flex-grow: 1; /* Allow pre to grow and fill space */
     overflow: auto; /* Add scrollbars if content overflows */
     border: 1px solid;
-    border-radius: 4px;
+    border-radius: 5px; /* Match buttons */
     padding: 0 !important; /* Override Prism's default padding */
     margin: 0 !important; /* Override Prism's default margin */
-    min-height: 300px; 
+    min-height: 300px;
     transition: border-color 0.3s ease;
 
 }
@@ -228,7 +276,7 @@ body[data-theme='dark'] .output-section pre {
     flex-grow: 1; 
     overflow: auto; 
     border: 1px solid;
-    border-radius: 4px;
+    border-radius: 5px; /* Match buttons */
     padding: 1.5rem;
     min-height: 300px; /* Match textarea */
     transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
@@ -252,7 +300,7 @@ body[data-theme='dark'] #html-preview {
     overflow: auto; /* Add scrollbars */
     border: 1px solid;
     border-top: none; /* Remove top border as tabs have bottom border */
-    border-radius: 0 0 4px 4px; /* Round bottom corners */
+    border-radius: 0 0 5px 5px; /* Round bottom corners - match */
     padding: 0.75rem;
     min-height: 300px; /* Match textarea */
     transition: border-color 0.3s ease, background-color 0.3s ease, color 0.3s ease;
@@ -307,6 +355,18 @@ footer {
 body[data-theme='light'] footer { border-top-color: var(--border-color-light); }
 body[data-theme='dark'] footer { border-top-color: var(--border-color-dark); }
 
+
+.input-section {
+ /* Removed stray border */
+}
+
+@media (min-width: 769px) {
+    .input-section,
+    .output-section {
+        width: 50%; /* Ensure each takes half the width */
+        
+    }
+}
 
 /* Responsive Design - Stack columns on smaller screens */
 @media (max-width: 768px) {

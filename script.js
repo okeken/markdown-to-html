@@ -129,10 +129,10 @@ document.addEventListener('DOMContentLoaded', () => {
         const htmlToCopy = htmlOutput.textContent;
         navigator.clipboard.writeText(htmlToCopy).then(() => {
             // Optional: Provide user feedback (e.g., change button text temporarily)
-            const originalText = copyBtn.textContent;
+            const originalText = copyBtn.innerHTML;
             copyBtn.textContent = 'Copied!';
             setTimeout(() => {
-                copyBtn.textContent = originalText;
+                copyBtn.innerHTML = originalText;
             }, 1500);
         }).catch(err => {
             console.error('Failed to copy HTML: ', err);

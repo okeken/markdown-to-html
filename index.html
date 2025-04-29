@@ -26,8 +26,10 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700&display=swap" rel="stylesheet">
+    <!-- Font Awesome CDN -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
 </head>
-<body data-theme="light"> 
+<body data-theme="light">
 
     <!-- SEO Note: Existing lang="en" and viewport meta are good -->
 </head>
@@ -38,16 +40,13 @@
         <h1>Online Markdown to HTML Converter</h1>
         <button id="theme-toggle" aria-label="Toggle light/dark mode">🌙</button>
     </header>
-    <!-- SEO Note: Using <main> for primary content - Good -->
 
     <main class="container">
-    <main class="container">
-        <!-- SEO Note: Using <section> for logical content blocks - Good -->
         <section class="input-section">
             <h2>Markdown Input</h2>
             <div class="toolbar">
-                <button id="paste-md" aria-label="Paste Markdown from clipboard">Paste</button>
-                <button id="clear-all" aria-label="Clear input and output">Clear</button>
+                <button id="paste-md" aria-label="Paste Markdown from clipboard"><i class="fa-solid fa-paste"></i> Paste</button>
+                <button id="clear-all" aria-label="Clear input and output"><i class="fa-solid fa-trash-can"></i> Clear</button>
             </div>
             <textarea id="markdown-input" placeholder="Type your Markdown here..." aria-label="Markdown Input Area"></textarea>
         </section>
@@ -57,8 +56,8 @@
                 <button id="tab-preview" class="tab-button active" aria-controls="html-preview" aria-selected="true">Preview</button>
                 <button id="tab-source" class="tab-button" aria-controls="html-output-container" aria-selected="false">Source</button>
                 <div class="toolbar output-toolbar"> <!-- Moved toolbar here -->
-                    <button id="copy-html" aria-label="Copy HTML source code to clipboard">Copy Source</button>
-                    <button id="download-html" aria-label="Download HTML source code file">Download Source</button>
+                    <button id="copy-html" aria-label="Copy HTML source code to clipboard"><i class="fa-solid fa-copy"></i> Copy </button>
+                    <button id="download-html" aria-label="Download HTML source code file"><i class="fa-solid fa-download"></i> Download </button>
                 </div>
             </div>
             <div id="html-preview" class="output-pane active" role="tabpanel" aria-labelledby="tab-preview">
